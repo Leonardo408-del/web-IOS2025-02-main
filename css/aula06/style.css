@@ -1,0 +1,216 @@
+/* ===== Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    background-color: #121212;
+    color: #fff;
+    line-height: 1.5;
+  }
+  
+  /* ===== Header ===== */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 15px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  header h1 {
+    font-size: 1.8em;
+    color: #ffd166;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  nav a:hover {
+    color: #ffd166;
+  }
+  
+  /* ===== Banner ===== */
+  .banner {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+  }
+  
+  .banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(50%);
+  }
+  
+  .banner-texto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 40px 60px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 1.2s ease forwards;
+  }
+  
+  .banner-texto h2 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #ffd166;
+  }
+  
+  .banner-texto p {
+    font-size: 1.2em;
+    margin-bottom: 25px;
+  }
+  
+  .banner-texto button {
+    background: #ffd166;
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .banner-texto button:hover {
+    background: #ffb703;
+    transform: scale(1.05);
+  }
+
+  /* ===== Cards ===== */
+  .card {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  
+  .card h2 {
+    color: #ffd166;
+    margin-bottom: 40px;
+    font-size: 2em;
+  }
+  
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  .cat {
+    background: #1e1e1e;
+    border-radius: 15px;
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+  }
+  
+  .cat:hover {
+    transform: translateY(-8px);
+  }
+  
+  .cat img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+  
+  .cat h3 {
+    color: #ffd166;
+    margin: 15px 0 5px;
+  }
+  
+  .cat p {
+    font-size: 0.95em;
+    padding: 0 15px;
+    margin-bottom: 15px;
+  }
+  
+  .cat button {
+    background: #ffd166;
+    color: #1a1a1a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cat button:hover {
+    background: #ffb703;
+  }
+  
+  /* ===== Animação ===== */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+ /* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: var(--radius);
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    resize: none;
+  }
+  
+  button[type="submit"] {
+    background: var(--destaque);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background: #ff4d6d;
+  }
+  
+  /* Rodapé */
+  footer {
+    text-align: center;
+    padding: 16px 0 24px;
+    color: #aaa;
+    font-size: 0.9rem;
+  }
+  

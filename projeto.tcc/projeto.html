@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Açougue Beeflogy — Demo</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* =========================
+   VARIÁVEIS E RESET (UNIFICADO)
+   ========================= */
+    :root {
+      --bg: #0f1113;
+      --card: #121212;
+      --muted: #cfcfcf;
+      --accent-1: #8a2b2b;
+      --accent-2: #ffd7c2;
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-2: rgba(255, 255, 255, 0.03);
+      --radius: 12px;
+      --transition: 300ms cubic-bezier(.2, .9, .3, 1);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, Roboto, Arial;
+      background: linear-gradient(180deg, #0b0b0b, #0f1113);
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px
+    }
+
+    /* header */
+    .site-header {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03)
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      text-decoration: none;
+      color: inherit
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px
+    }
+
+    .brand-title {
+      font-family: "Playfair Display", serif;
+      font-size: 18px
+    }
+
+    .brand-sub {
+      display: block;
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    /* nav */
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 0;
+      color: var(--muted);
+      font-size: 20px;
+      padding: 8px
+    }
+
+    .nav-list {
+      display: flex;
+      gap: 14px;
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+
+    .nav-list a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: var(--transition)
+    }
+
+    .nav-list a:hover {
+      color: white;
+      background: var(--glass)
+    }
+
+    /* hero */
+    .hero {
+      padding: 28px 0
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 28px;
+      align-items: center
+    }
+
+    .hero-content h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 32px;
+      margin: 0 0 8px
+    }
+
+    .lead {
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent-1), #b84b4b);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 0;
+      color: #fff;
+      cursor: pointer
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: var(--muted)
+    }
+
+    /* sections */
+    .section {
+      padding: 28px 0
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .controls input[type="search"],
+    .controls select {
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: inherit;
+      min-width: 140px;
+      outline: none
+    }
+
+    .controls input::placeholder {
+      color: var(--muted)
+    }
+
+    /* product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(95, 9, 9, 0.35), transparent);
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255, 0, 0, 0.5);
+      transition: transform var(--transition), box-shadow var(--transition)
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6)
+    }
+
+    .card .thumb {
+      height: 120px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #7e2b2b, #c66d6d);
+      margin-bottom: 8px;
+      padding: 10px;
+      color: var(--accent-2);
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      font-weight: 700
+    }
+
+    .card h4 {
+      margin: 4px 0 6px
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 8px
+    }
+
+    .card .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .badge {
+      background: #2b2b2b;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .small-btn {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700
+    }
+
+    .add-btn {
+      background: linear-gradient(90deg, #2ea44f, #2bb673);
+      color: white
+    }
+
+    /* images */
+    .product-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 8px
+    }
+
+    /* contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 16px
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      background: transparent;
+      color: inherit;
+      outline: none
+    }
+
+    /* cart panel */
+    .cart-panel {
+      position: fixed;
+      right: -420px;
+      top: 0;
+      width: 360px;
+      height: 100%;
+      background: #121212;
+      color: white;
+      padding: 18px;
+      transition: 0.28s;
+      display: flex;
+      flex-direction: column;
+      z-index: 9999;
+      border-left: 1px solid rgba(255, 255, 255, 0.06)
+    }
+
+    .cart-panel.open {
+      right: 0
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .cart-items {
+      margin-top: 12px;
+      overflow: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 6px
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 10px;
+      background: #1e1e1e;
+      padding: 8px;
+      border-radius: 8px;
+      align-items: center
+    }
+
+    .cart-item .title {
+      font-weight: 600
+    }
+
+    .cart-item-img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 6px
+    }
+
+    .remove-item {
+      background: transparent;
+      border: 0;
+      color: #ff6b6b;
+      cursor: pointer;
+      font-weight: 700
+    }
+
+    /* footer */
+    .site-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 14px 0;
+      margin-top: 16px
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted)
+    }
+
+    /* responsive */
+    @media (max-width:900px) {
+      .hero-grid {
+        grid-template-columns: 1fr
+      }
+
+      .nav-list {
+        display: none
+      }
+
+      .nav-toggle {
+        display: block
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: stretch
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <svg class="brand-logo" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="45" fill="#8a2b2b" />
+        </svg>
+        <div>
+          <span class="brand-title">Açougue <strong>Beeflogy</strong></span>
+          <small class="brand-sub">Cortes premium • Frescor diário</small>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Menu principal">
+        <button class="nav-toggle" id="navToggle" aria-expanded="false">☰</button>
+        <ul id="navMenu" class="nav-list">
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a href="#carrinho" id="openCart">Carrinho <span id="cartCount">0</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>O melhor corte. Preservamos o sabor.</h1>
+          <p class="lead">Qualidade, procedência e cortes feitos por mestres açougueiros.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="document.getElementById('search').focus()">Ver cortes</button>
+            <a class="btn-outline" href="#sobre">Nossa história</a>
+          </div>
+        </div>
+        <div class="steak-card" aria-hidden="true">
+          <div class="label">Corte Premium</div>
+          <div class="steak-photo"
+            style="height:100%;border-radius:12px;background:linear-gradient(180deg,#2f0b0b,#6a1f1f)">
+            <img src="" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="produtos" class="section">
+      <div class="section-head">
+        <h2>Nossos Cortes</h2>
+        <div class="controls">
+          <input id="search" type="search" placeholder="Buscar por corte, ex: picanha">
+          <select id="filter">
+            <option value="all">Todos</option>
+            <option value="bovino">Bovino</option>
+            <option value="suino">Suíno</option>
+            <option value="aves">Aves</option>
+          </select>
+          <select id="sort">
+            <option value="featured">Destaques</option>
+            <option value="price-asc">Preço: menor → maior</option>
+            <option value="price-desc">Preço: maior → menor</option>
+            <option value="name-asc">Nome A → Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="productGrid" class="product-grid">
+        <!-- produtos serão renderizados via JS -->
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
+      <h2>Por que escolher o Açougue Beeflogy?</h2>
+      <p class="lead">Tradição familiar, técnicas modernas e compromisso com a qualidade.</p>
+    </section>
+
+    <section id="contato" class="section">
+      <h2>Fale conosco / Faça seu pedido</h2>
+      <div class="contact-grid">
+        <form id="contactForm" class="contact-form" novalidate>
+          <label>Nome <input id="nome" name="nome" required></label>
+          <label>Telefone <input id="telefone" name="telefone"></label>
+          <label>Mensagem <textarea id="mensagem" rows="4" placeholder="Ex: 2kg de picanha fatiada"></textarea></label>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn-primary" type="submit">Enviar</button>
+            <button type="reset" class="btn-outline">Limpar</button>
+          </div>
+        </form>
+
+        <aside style="color:var(--muted)">
+          <h4>Endereço</h4>
+          <p>Rua Exemplo, 123 — Centro</p>
+          <h4>Telefone</h4>
+          <p><a href="tel:+5511999999999">+55 (11) 99999-9999</a></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Carrinho -->
+  <aside id="cartPanel" class="cart-panel" aria-hidden="true">
+    <div class="cart-header">
+      <h3>Seu Carrinho</h3>
+      <button id="closeCart" aria-label="Fechar">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong>Total:</strong><strong id="cartTotal">R$ 0,00</strong>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button id="clearCart" class="small-btn">Limpar</button>
+        <button id="checkout" class="btn-primary">Finalizar</button>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="site-footer container">
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Açougue Beeflogy — Todos os direitos reservados</div>
+      <div style="color:var(--muted)">IG • FB</div>
+    </div>
+  </footer>
+
+  <script>
+    /* SCRIPT UNIFICADO: produtos, filtros, carrinho, form, nav */
+    document.addEventListener('DOMContentLoaded', () => {
+      // dados (com imagens)
+      const produtos = [
+        { id: 1, nome: 'Picanha', tipo: 'bovino', preco: 89.90, desc: 'Picanha suculenta, fatiada por kg', img: 'https://uploads.metroimg.com/wp-content/uploads/2022/11/08134440/picanha_rodeio1.jpg', destaque: true },
+        { id: 2, nome: 'Alcatra', tipo: 'bovino', preco: 39.50, desc: 'Ótima para churrasco', img: 'https://i0.wp.com/espetinhodesucesso.com/wp-content/uploads/2022/08/alcatra-assada.jpg?resize=700%2C500&ssl=1' },
+        { id: 3, nome: 'Costela', tipo: 'bovino', preco: 29.90, desc: 'Costela macia, ideal para assar', img: 'https://www.estadao.com.br/resizer/v2/7DLTVL4RWFBLFMKOFQT4CXCV7I.jpeg?auth=e7fc4c9a420d075f5b9bc39bc6b8801dfc7dc7b1e2b5ff4ad18a16f54211c902' },
+        { id: 4, nome: 'Filé Mignon', tipo: 'bovino', preco: 79.00, desc: 'Corte nobre e macio', img: 'https://minervafoods.com/wp-content/uploads/2022/12/grilled_beef_steaks_with_spices_on_wooden_cutting_board-1.jpg', destaque: true },
+        { id: 5, nome: 'Bisteca Suína', tipo: 'suino', preco: 18.50, desc: 'Sabor delicado', img: 'https://www.comidaereceitas.com.br/wp-content/uploads/2018/09/um-close-up-de-carne-de-porco-grelhada-sendo-esmaltada-com-molho-780x520.jpg' },
+        { id: 6, nome: 'Linguiça Artesanal', tipo: 'suino', preco: 24.90, desc: 'Tempero caseiro', img: 'https://www.auroraalimentos.com.br/wp-content/uploads/2022/04/Linguica-Toscana-com-Molho-de-Mostardas-e-Mel.jpg' },
+        { id: 7, nome: 'Coxa e Sobrecoxa', tipo: 'aves', preco: 12.50, desc: 'Aves frescas e suculentas', img: 'https://fricassedefrango.com.br/wp-content/uploads/2025/07/como-fazer-coxa-e-sobrecoxa-de-frango-assada.jpg' },
+        { id: 8, nome: 'Peito de Frango', tipo: 'aves', preco: 16.80, desc: 'Peito desossado', img: 'https://espetinhodesucesso.com/wp-content/uploads/2022/12/como-assar-peito-de-frango.jpg' }
+      ];
+
+      // elementos
+      const grid = document.getElementById('productGrid');
+      const searchInput = document.getElementById('search');
+      const filter = document.getElementById('filter');
+      const sort = document.getElementById('sort');
+
+      const cartPanel = document.getElementById('cartPanel');
+      const openCart = document.getElementById('openCart');
+      const closeCart = document.getElementById('closeCart');
+      const cartItemsEl = document.getElementById('cartItems');
+      const cartTotalEl = document.getElementById('cartTotal');
+      const clearCartBtn = document.getElementById('clearCart');
+      const checkoutBtn = document.getElementById('checkout');
+      const cartCount = document.getElementById('cartCount');
+
+      const navToggle = document.getElementById('navToggle');
+      const navMenu = document.getElementById('navMenu');
+
+      // nav toggle
+      navToggle && navToggle.addEventListener('click', () => {
+        const open = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', String(!open));
+        if (navMenu) navMenu.style.display = open ? 'none' : 'flex';
+      });
+
+      // cart from localStorage
+      let cart = JSON.parse(localStorage.getItem('cart_Beeflogy') || '[]');
+
+      const saveCart = () => localStorage.setItem('cart_Beeflogy', JSON.stringify(cart));
+      const formatMoney = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+      // render products
+      function renderProducts(list) {
+        grid.innerHTML = '';
+        if (!list.length) { grid.innerHTML = '<p style="color:var(--muted)">Nenhum produto encontrado.</p>'; return; }
+        list.forEach(p => {
+          const card = document.createElement('article');
+          card.className = 'card product-card';
+          card.dataset.id = p.id;
+          card.innerHTML = `
+        <div class="thumb"><img src="${p.img}" alt="${p.nome}" style="width:100%;height:120px;object-fit:cover;border-radius:8px"></div>
+        <h4>${p.nome}</h4>
+        <p>${p.desc}</p>
+        <div class="meta">
+          <div class="badge">${formatMoney(p.preco)}/kg</div>
+          <button class="small-btn add-btn" data-id="${p.id}">Adicionar</button>
+        </div>
+      `;
+          grid.appendChild(card);
+        });
+      }
+
+      // filters
+      function applyFilters() {
+        const q = (searchInput.value || '').trim().toLowerCase();
+        const type = filter.value;
+        const order = sort.value;
+        let list = produtos.filter(p => {
+          const hit = p.nome.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+          const typeOk = (type === 'all') || p.tipo === type;
+          return hit && typeOk;
+        });
+        if (order === 'price-asc') list.sort((a, b) => a.preco - b.preco);
+        if (order === 'price-desc') list.sort((a, b) => b.preco - a.preco);
+        if (order === 'name-asc') list.sort((a, b) => a.nome.localeCompare(b.nome));
+        if (order === 'featured') list.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0));
+        renderProducts(list); attachAddButtons();
+      }
+
+      // add buttons
+      function attachAddButtons() {
+        document.querySelectorAll('.add-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            addToCart(Number(btn.dataset.id));
+          });
+        });
+        // also support older .addCart
+        document.querySelectorAll('.addCart').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            if (!card) return;
+            addToCart(Number(card.dataset.id));
+          });
+        });
+      }
+
+      // cart functions
+      function addToCart(id) {
+        const prod = produtos.find(p => p.id === id);
+        if (!prod) return;
+        const item = cart.find(i => i.id === id);
+        if (item) item.qty++;
+        else cart.push({ id: prod.id, nome: prod.nome, preco: prod.preco, img: prod.img, qty: 1 });
+        saveCart(); renderCart(); flashCartCount();
+      }
+
+      function updateQty(id, qty) {
+        const it = cart.find(i => i.id === id);
+        if (!it) return;
+        it.qty = qty;
+        if (it.qty <= 0) cart = cart.filter(i => i.id !== id);
+        saveCart(); renderCart(); flashCartCount();
+      }
+
+      function removeItem(id) {
+        cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); flashCartCount();
+      }
+
+      function clearCart() {
+        cart = []; saveCart(); renderCart(); flashCartCount();
+      }
+
+      function cartTotal() { return cart.reduce((s, i) => s + i.preco * i.qty, 0); }
+
+      // render cart
+      function renderCart() {
+        cartItemsEl.innerHTML = '';
+        if (cart.length === 0) {
+          cartItemsEl.innerHTML = '<p style="color:var(--muted)">Carrinho vazio. Adicione cortes!</p>';
+          cartTotalEl.textContent = formatMoney(0);
+          cartCount.textContent = '0';
+          return;
+        }
+        cart.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML = `
+        <img src="${item.img}" class="cart-item-img" alt="${item.nome}">
+        <div style="flex:1">
+          <div class="title">${item.nome}</div>
+          <div style="color:var(--muted);font-size:13px">${formatMoney(item.preco)} / kg</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div>
+            <button class="small-btn" data-action="dec" data-id="${item.id}">−</button>
+            <span style="padding:0 8px">${item.qty}</span>
+            <button class="small-btn" data-action="inc" data-id="${item.id}">+</button>
+          </div>
+          <div style="font-weight:700">${formatMoney(item.preco * item.qty)}</div>
+          <button class="small-btn" data-action="remove" data-id="${item.id}">Remover</button>
+        </div>
+      `;
+          cartItemsEl.appendChild(row);
+        });
+
+        cartItemsEl.querySelectorAll('[data-action]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = Number(btn.dataset.id);
+            const act = btn.dataset.action;
+            if (act === 'inc') updateQty(id, cart.find(i => i.id === id).qty + 1);
+            if (act === 'dec') updateQty(id, cart.find(i => i.id === id).qty - 1);
+            if (act === 'remove') removeItem(id);
+          });
+        });
+
+        cartTotalEl.textContent = formatMoney(cartTotal());
+        cartCount.textContent = String(cart.reduce((s, i) => s + i.qty, 0));
+      }
+
+      function flashCartCount() {
+        try {
+          cartCount.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.2)' }, { transform: 'scale(1)' }], { duration: 300 });
+        } catch (e) { }
+      }
+
+      // open/close cart (keeps class open)
+      openCart && openCart.addEventListener('click', (e) => { e.preventDefault(); cartPanel.classList.add('open'); cartPanel.setAttribute('aria-hidden', 'false'); });
+      closeCart && closeCart.addEventListener('click', () => { cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true'); });
+
+      // clear/checkout
+      clearCartBtn && clearCartBtn.addEventListener('click', clearCart);
+      checkoutBtn && checkoutBtn.addEventListener('click', () => {
+        if (cart.length === 0) { alert('Seu carrinho está vazio.'); return; }
+        alert('Pedido realizado! Entraremos em contato.');
+        clearCart(); cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true');
+      });
+
+      // search/filter events
+      [searchInput, filter, sort].forEach(el => el && el.addEventListener('input', applyFilters));
+
+      // contact form
+      const contactForm = document.getElementById('contactForm');
+      contactForm && contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = (document.getElementById('nome').value || '').trim();
+        const msg = (document.getElementById('mensagem').value || '').trim();
+        if (!nome || !msg) { alert('Preencha nome e mensagem.'); return; }
+        alert('Mensagem enviada. Obrigado, ' + nome + '!');
+        contactForm.reset();
+      });
+
+      // escape to close
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') { cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true'); } });
+
+      // init
+      renderProducts(produtos);
+      attachAddButtons();
+      renderCart();
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+
+    });
+  </script>
+</body>
+
+</html>

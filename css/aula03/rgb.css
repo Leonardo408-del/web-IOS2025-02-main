@@ -1,0 +1,20 @@
+body{
+    background-image: url("https://s2-g1.glbimg.com/ZpFy0h7L0tXqLB3ADTRo0p0dLD0=/0x0:1200x800/1008x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/E/z/UKQzzzRRAR8zMhIp3EZA/jung3.jpg"); 
+    background-size: cover; }
+h2{
+    color: rgb(90, 25, 255);
+}
+
+
+#red{
+    color: red;
+}
+#green{
+    color: green;
+}
+#blue{
+    color: blue;
+}
+p{
+    color:#ddc4f5;
+}

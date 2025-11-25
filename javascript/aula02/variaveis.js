@@ -1,0 +1,5 @@
+let nomeCompleto = "Marisabel Tambo Mamani"
+const data_de_nascimento = "2007-09-29"
+let idade = "17" 
+const ano_de_nascimento = "2007"
+let ano_atual = "2025"

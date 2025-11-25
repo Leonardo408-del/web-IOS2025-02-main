@@ -1,0 +1,31 @@
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Venda de Sorvete 🍦</title>
+</head>
+<body>
+  <h2>Compra de Sorvete</h2>
+
+  <p>Dinheiro: <input type="number" id="dinheiro"></p>
+  <p>Sabor: <input type="text" id="sabor" placeholder="chocolate, morango..."></p>
+  <button onclick="comprar()">Comprar</button>
+
+  <p id="resultado"></p>
+
+  <script>
+    function comprar() {
+      let preco = 5;
+      let dinheiro = document.getElementById("dinheiro").value;
+      let sabor = document.getElementById("sabor").value;
+
+      if (dinheiro >= preco) {
+        document.getElementById("resultado").innerText =
+          "Você comprou um sorvete de " + sabor + " 🍦";
+      } else {
+        document.getElementById("resultado").innerText =
+          "Dinheiro insuficiente 😢";
+      }
+    }
+  </script>
+</body>
+</html>
