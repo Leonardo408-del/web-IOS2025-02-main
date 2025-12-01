@@ -1,766 +1,345 @@
 <!doctype html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Açougue Beeflogy — Demo</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700&display=swap"
-    rel="stylesheet">
-  <style>
-    /* =========================
-   VARIÁVEIS E RESET (UNIFICADO)
-   ========================= */
-    :root {
-      --bg: #0f1113;
-      --card: #121212;
-      --muted: #cfcfcf;
-      --accent-1: #8a2b2b;
-      --accent-2: #ffd7c2;
-      --glass: rgba(255, 255, 255, 0.04);
-      --glass-2: rgba(255, 255, 255, 0.03);
-      --radius: 12px;
-      --transition: 300ms cubic-bezier(.2, .9, .3, 1);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Açougue Beeflogy — Qualidade & Tradição</title>
+<link rel="icon" type="png" 
+thref="images/https://chatgpt.com/backend-api/estuary/content?id=file_00000000638871f5ad86483c5592f682&ts=490145&p=fs&cid=1&sig=dceca9cd76467f361f03eddd0e744098747c05a7066105986a73a6026f1af419&v=0">
+<style>
+:root{
+  --bg:#0f0f10;
+  --card:#121212;
+  --text:#fff;
+  --accent:#8a2b2b;
+  --glass: rgba(255,255,255,0.03);
+}
+body{margin:0; background:var(--bg); color:var(--text); font-family:Inter,Arial,Helvetica,sans-serif; transition:background .4s ease,color .4s ease; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+body.light{--bg:#f3f3f3; --card:#fff; --text:#111; --glass: rgba(0,0,0,0.03);}
+header{background:var(--card); color:var(--text); padding:22px 20px; text-align:center; border-bottom:3px solid var(--accent); position:relative; box-shadow:0 6px 18px rgba(0,0,0,0.25);}
+header h1{margin:0;font-size:24px;letter-spacing:1px;}
+#temaBtn{position:absolute;right:20px;top:18px;padding:8px 12px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;box-shadow:0 6px 12px rgba(0,0,0,0.25); transition:transform .18s ease,opacity .18s ease;}
+#temaBtn:active{transform:translateY(1px);}
+.subtitulo{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:14px 22px; margin:20px auto; width:fit-content; border-radius:12px; border-left:6px solid var(--accent); box-shadow:0 8px 30px rgba(0,0,0,0.35);}
+.container{padding:18px;max-width:1200px;margin:0 auto;position:relative;}
+.tabs{display:flex;gap:12px;margin:20px 0;}
+.tab{padding:10px 16px;background:var(--card);border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;}
+.tab:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,0.25);}
+.tab.active{border:1px solid var(--accent);box-shadow:0 12px 30px rgba(0,0,0,0.25);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:26px;}
+.produto{background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);overflow:hidden;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.28);transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .28s;}
+.produto img{width:100%;height:160px;object-fit:cover;border-radius:8px;}
+.produto h3{margin:10px 0 6px;font-size:16px;}
+.produto p{margin:0;color:var(--text);opacity:.9;}
+.produto button{margin-top:8px;width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;transition:transform .15s ease;}
+.produto button:hover{transform:scale(1.03);}
+.produto:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 18px 40px rgba(0,0,0,0.35);}
+.fade-in{animation:fadeUp .45s ease both;}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(12px);}100%{opacity:1;transform:translateY(0);}}
+.hidden{display:none;}
+#finalizacao{
+  background: var(--card);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+  max-width: 500px;
+  margin: 20px auto;
+}
+.input{width:100%;padding:10px;border-radius:8px;border:none;background:var(--glass);color:var(--text);margin-bottom:10px;}
+.btn{background:var(--accent);color:#fff;padding:12px;border-radius:10px;border:none;cursor:pointer;width:100%;}
+.menu-item{background:var(--card);padding:14px;border-radius:10px;border-left:6px solid var(--accent);margin-bottom:12px;}
+.qr-container{background:#1f1f1f;padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5);text-align:center;}
+.qr-container img{border-radius:8px;background:#fff;padding:6px;}
+#carrinho{position:fixed;right:20px;bottom:20px;width:250px;background:var(--card);padding:12px;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,0.4);z-index:100;}
+#carrinho h2{margin-top:0;font-size:18px;margin-bottom:10px;}
 
-    * {
-      box-sizing: border-box
-    }
+/* Localização */
+#localizacao{
+  margin:40px 0;
+  text-align:center;
+  padding:0 12px;
+}
+#localizacao h2{
+  margin-bottom:16px;
+  color:var(--accent);
+}
+#localizacao iframe{
+  border:0;
+  width:100%;
+  max-width:800px;
+  height:400px;
+  border-radius:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.28);
+}
 
-    html,
-    body {
-      height: 100%
-    }
+/* Rodapé */
+footer{
+  background:var(--card);
+  text-align:center;
+  padding:20px;
+  border-top:3px solid var(--accent);
+  box-shadow:0 -6px 18px rgba(0,0,0,0.25);
+  margin-top:40px;
+}
+footer p{
+  margin:0;
+  color:var(--text);
+  font-size:14px;
+}
 
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, Roboto, Arial;
-      background: linear-gradient(180deg, #0b0b0b, #0f1113);
-      color: #fff;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.45;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px
-    }
-
-    /* header */
-    .site-header {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
-      backdrop-filter: blur(6px);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03)
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between
-    }
-
-    .brand {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      text-decoration: none;
-      color: inherit
-    }
-
-    .brand-logo {
-      width: 48px;
-      height: 48px
-    }
-
-    .brand-title {
-      font-family: "Playfair Display", serif;
-      font-size: 18px
-    }
-
-    .brand-sub {
-      display: block;
-      font-size: 12px;
-      color: var(--muted)
-    }
-
-    /* nav */
-    .main-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px
-    }
-
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: 0;
-      color: var(--muted);
-      font-size: 20px;
-      padding: 8px
-    }
-
-    .nav-list {
-      display: flex;
-      gap: 14px;
-      list-style: none;
-      margin: 0;
-      padding: 0
-    }
-
-    .nav-list a {
-      color: var(--muted);
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      transition: var(--transition)
-    }
-
-    .nav-list a:hover {
-      color: white;
-      background: var(--glass)
-    }
-
-    /* hero */
-    .hero {
-      padding: 28px 0
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 28px;
-      align-items: center
-    }
-
-    .hero-content h1 {
-      font-family: "Playfair Display", serif;
-      font-size: 32px;
-      margin: 0 0 8px
-    }
-
-    .lead {
-      color: var(--muted);
-      margin-bottom: 12px
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 12px
-    }
-
-    .btn-primary {
-      background: linear-gradient(90deg, var(--accent-1), #b84b4b);
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 0;
-      color: #fff;
-      cursor: pointer
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 10px 14px;
-      border-radius: 10px;
-      color: var(--muted)
-    }
-
-    /* sections */
-    .section {
-      padding: 28px 0
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px
-    }
-
-    .controls {
-      display: flex;
-      gap: 8px;
-      align-items: center
-    }
-
-    .controls input[type="search"],
-    .controls select {
-      background: var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      padding: 8px 10px;
-      border-radius: 8px;
-      color: inherit;
-      min-width: 140px;
-      outline: none
-    }
-
-    .controls input::placeholder {
-      color: var(--muted)
-    }
-
-    /* product grid */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 14px
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(95, 9, 9, 0.35), transparent);
-      border-radius: 12px;
-      padding: 12px;
-      border: 1px solid rgba(255, 0, 0, 0.5);
-      transition: transform var(--transition), box-shadow var(--transition)
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6)
-    }
-
-    .card .thumb {
-      height: 120px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #7e2b2b, #c66d6d);
-      margin-bottom: 8px;
-      padding: 10px;
-      color: var(--accent-2);
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      font-weight: 700
-    }
-
-    .card h4 {
-      margin: 4px 0 6px
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0 0 8px
-    }
-
-    .card .meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center
-    }
-
-    .badge {
-      background: #2b2b2b;
-      padding: 6px 8px;
-      border-radius: 8px;
-      font-size: 13px;
-      color: var(--muted)
-    }
-
-    .small-btn {
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 0;
-      cursor: pointer;
-      font-weight: 700
-    }
-
-    .add-btn {
-      background: linear-gradient(90deg, #2ea44f, #2bb673);
-      color: white
-    }
-
-    /* images */
-    .product-img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 8px
-    }
-
-    /* contact */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 16px
-    }
-
-    .contact-form label {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 14px
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      background: transparent;
-      color: inherit;
-      outline: none
-    }
-
-    /* cart panel */
-    .cart-panel {
-      position: fixed;
-      right: -420px;
-      top: 0;
-      width: 360px;
-      height: 100%;
-      background: #121212;
-      color: white;
-      padding: 18px;
-      transition: 0.28s;
-      display: flex;
-      flex-direction: column;
-      z-index: 9999;
-      border-left: 1px solid rgba(255, 255, 255, 0.06)
-    }
-
-    .cart-panel.open {
-      right: 0
-    }
-
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center
-    }
-
-    .cart-items {
-      margin-top: 12px;
-      overflow: auto;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-right: 6px
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 10px;
-      background: #1e1e1e;
-      padding: 8px;
-      border-radius: 8px;
-      align-items: center
-    }
-
-    .cart-item .title {
-      font-weight: 600
-    }
-
-    .cart-item-img {
-      width: 56px;
-      height: 56px;
-      object-fit: cover;
-      border-radius: 6px
-    }
-
-    .remove-item {
-      background: transparent;
-      border: 0;
-      color: #ff6b6b;
-      cursor: pointer;
-      font-weight: 700
-    }
-
-    /* footer */
-    .site-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      padding: 14px 0;
-      margin-top: 16px
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--muted)
-    }
-
-    /* responsive */
-    @media (max-width:900px) {
-      .hero-grid {
-        grid-template-columns: 1fr
-      }
-
-      .nav-list {
-        display: none
-      }
-
-      .nav-toggle {
-        display: block
-      }
-
-      .controls {
-        flex-direction: column;
-        align-items: stretch
-      }
-
-      .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="style.css">
+/* Responsividade */
+@media (max-width:800px){
+  #carrinho{width:200px;right:10px;bottom:10px;}
+  #localizacao iframe{height:300px;}
+  footer p{font-size:13px;}
+}
+@media (max-width:500px){
+  #localizacao iframe{height:250px;}
+  footer p{font-size:12px;}
+}
+</style>
 </head>
-
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#">
-        <svg class="brand-logo" viewBox="0 0 100 100" aria-hidden="true">
-          <circle cx="50" cy="50" r="45" fill="#8a2b2b" />
-        </svg>
-        <div>
-          <span class="brand-title">Açougue <strong>Beeflogy</strong></span>
-          <small class="brand-sub">Cortes premium • Frescor diário</small>
-        </div>
-      </a>
 
-      <nav class="main-nav" aria-label="Menu principal">
-        <button class="nav-toggle" id="navToggle" aria-expanded="false">☰</button>
-        <ul id="navMenu" class="nav-list">
-          <li><a href="#produtos">Produtos</a></li>
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#contato">Contato</a></li>
-          <li><a href="#carrinho" id="openCart">Carrinho <span id="cartCount">0</span></a></li>
-        </ul>
-      </nav>
+<header>
+  <h1>Beeflogy</h1>
+  <button id="temaBtn">Tema</button>
+</header>
+
+<div class="subtitulo">A tradição que alimenta</div>
+
+<div class="container">
+  <div class="tabs">
+    <div class="tab" onclick="aba('produtos')">Produtos</div>
+    <div class="tab" onclick="aba('categorias')">Tipos de Carne</div>
+    <div class="tab" onclick="aba('cardapio')">Cardápio</div>
+  </div>
+
+  <div id="produtos" class="aba">
+    <div class="grid" id="lista-produtos"></div>
+  </div>
+
+  <div id="categorias" class="aba hidden">
+    <div class="tabs">
+      <div class="tab" onclick="mostrarCategoria('bovinos')">Bovinos</div>
+      <div class="tab" onclick="mostrarCategoria('suinos')">Suínos</div>
+      <div class="tab" onclick="mostrarCategoria('aves')">Aves</div>
     </div>
-  </header>
+    <div class="grid" id="categorias-lista"></div>
+  </div>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <h1>O melhor corte. Preservamos o sabor.</h1>
-          <p class="lead">Qualidade, procedência e cortes feitos por mestres açougueiros.</p>
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="document.getElementById('search').focus()">Ver cortes</button>
-            <a class="btn-outline" href="#sobre">Nossa história</a>
-          </div>
-        </div>
-        <div class="steak-card" aria-hidden="true">
-          <div class="label">Corte Premium</div>
-          <div class="steak-photo"
-            style="height:100%;border-radius:12px;background:linear-gradient(180deg,#2f0b0b,#6a1f1f)">
-            <img src="" alt="">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="produtos" class="section">
-      <div class="section-head">
-        <h2>Nossos Cortes</h2>
-        <div class="controls">
-          <input id="search" type="search" placeholder="Buscar por corte, ex: picanha">
-          <select id="filter">
-            <option value="all">Todos</option>
-            <option value="bovino">Bovino</option>
-            <option value="suino">Suíno</option>
-            <option value="aves">Aves</option>
-          </select>
-          <select id="sort">
-            <option value="featured">Destaques</option>
-            <option value="price-asc">Preço: menor → maior</option>
-            <option value="price-desc">Preço: maior → menor</option>
-            <option value="name-asc">Nome A → Z</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="productGrid" class="product-grid">
-        <!-- produtos serão renderizados via JS -->
-      </div>
-    </section>
-
-    <section id="sobre" class="section">
-      <h2>Por que escolher o Açougue Beeflogy?</h2>
-      <p class="lead">Tradição familiar, técnicas modernas e compromisso com a qualidade.</p>
-    </section>
-
-    <section id="contato" class="section">
-      <h2>Fale conosco / Faça seu pedido</h2>
-      <div class="contact-grid">
-        <form id="contactForm" class="contact-form" novalidate>
-          <label>Nome <input id="nome" name="nome" required></label>
-          <label>Telefone <input id="telefone" name="telefone"></label>
-          <label>Mensagem <textarea id="mensagem" rows="4" placeholder="Ex: 2kg de picanha fatiada"></textarea></label>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn-primary" type="submit">Enviar</button>
-            <button type="reset" class="btn-outline">Limpar</button>
-          </div>
-        </form>
-
-        <aside style="color:var(--muted)">
-          <h4>Endereço</h4>
-          <p>Rua Exemplo, 123 — Centro</p>
-          <h4>Telefone</h4>
-          <p><a href="tel:+5511999999999">+55 (11) 99999-9999</a></p>
-        </aside>
-      </div>
-    </section>
-  </main>
-
-  <!-- Carrinho -->
-  <aside id="cartPanel" class="cart-panel" aria-hidden="true">
-    <div class="cart-header">
-      <h3>Seu Carrinho</h3>
-      <button id="closeCart" aria-label="Fechar">✕</button>
+  <div id="cardapio" class="aba hidden">
+    <div class="tabs">
+      <div class="tab" onclick="mostrarCardapio('cortes')">Cortes Especiais</div>
+      <div class="tab" onclick="mostrarCardapio('churrasco')">Churrasco</div>
+      <div class="tab" onclick="mostrarCardapio('preparados')">Preparados</div>
     </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div style="margin-top:12px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <strong>Total:</strong><strong id="cartTotal">R$ 0,00</strong>
-      </div>
-      <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button id="clearCart" class="small-btn">Limpar</button>
-        <button id="checkout" class="btn-primary">Finalizar</button>
-      </div>
+    <div class="grid" id="cardapio-lista"></div>
+  </div>
+
+  <section id="localizacao">
+  <h2>Localização</h2>
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.070526267755!2d-46.642842523847496!3d-23.565541361773404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c0a781bbd7%3A0x218dfb23db3a03eb!2sR.%20Joaquim%20T%C3%A1vora%20-%20Vila%20Mariana%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1733060000000"
+    width="100%"
+    height="400"
+    style="border:0; border-radius:12px;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</section>
+
+
+  <div id="finalizacao" class="aba hidden">
+    <h2>Itens no Carrinho</h2>
+    <div id="itens-carrinho-final"></div>
+    <div id="total-carrinho" style="margin-top:10px;font-weight:bold;"></div>
+
+    <h2>Dados Pessoais</h2>
+    <input class="input" placeholder="Nome completo">
+    <input class="input" placeholder="CEP">
+    <input class="input" placeholder="Número da residência">
+    <input class="input" placeholder="Telefone">
+
+    <h2>Pagamento — Cartão</h2>
+    <input class="input" placeholder="Número do cartão">
+    <input class="input" placeholder="Nome no cartão">
+    <input class="input" placeholder="Validade MM/AA">
+    <input class="input" placeholder="CVV">
+
+    <h2>Pagamento — PIX</h2>
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PIX_DO_BEeflogy" width="200">
+      <p style="color:#fff;margin-top:8px;">Escaneie o QR Code para pagar via PIX</p>
     </div>
-  </aside>
 
-  <footer class="site-footer container">
-    <div class="footer-inner">
-      <div>© <span id="year"></span> Açougue Beeflogy — Todos os direitos reservados</div>
-      <div style="color:var(--muted)">IG • FB</div>
-    </div>
-  </footer>
+    <button class="btn" onclick="finalizarPedido()">Confirmar pedido</button>
+  </div>
+</div>
 
-  <script>
-    /* SCRIPT UNIFICADO: produtos, filtros, carrinho, form, nav */
-    document.addEventListener('DOMContentLoaded', () => {
-      // dados (com imagens)
-      const produtos = [
-        { id: 1, nome: 'Picanha', tipo: 'bovino', preco: 89.90, desc: 'Picanha suculenta, fatiada por kg', img: 'https://uploads.metroimg.com/wp-content/uploads/2022/11/08134440/picanha_rodeio1.jpg', destaque: true },
-        { id: 2, nome: 'Alcatra', tipo: 'bovino', preco: 39.50, desc: 'Ótima para churrasco', img: 'https://i0.wp.com/espetinhodesucesso.com/wp-content/uploads/2022/08/alcatra-assada.jpg?resize=700%2C500&ssl=1' },
-        { id: 3, nome: 'Costela', tipo: 'bovino', preco: 29.90, desc: 'Costela macia, ideal para assar', img: 'https://www.estadao.com.br/resizer/v2/7DLTVL4RWFBLFMKOFQT4CXCV7I.jpeg?auth=e7fc4c9a420d075f5b9bc39bc6b8801dfc7dc7b1e2b5ff4ad18a16f54211c902' },
-        { id: 4, nome: 'Filé Mignon', tipo: 'bovino', preco: 79.00, desc: 'Corte nobre e macio', img: 'https://minervafoods.com/wp-content/uploads/2022/12/grilled_beef_steaks_with_spices_on_wooden_cutting_board-1.jpg', destaque: true },
-        { id: 5, nome: 'Bisteca Suína', tipo: 'suino', preco: 18.50, desc: 'Sabor delicado', img: 'https://www.comidaereceitas.com.br/wp-content/uploads/2018/09/um-close-up-de-carne-de-porco-grelhada-sendo-esmaltada-com-molho-780x520.jpg' },
-        { id: 6, nome: 'Linguiça Artesanal', tipo: 'suino', preco: 24.90, desc: 'Tempero caseiro', img: 'https://www.auroraalimentos.com.br/wp-content/uploads/2022/04/Linguica-Toscana-com-Molho-de-Mostardas-e-Mel.jpg' },
-        { id: 7, nome: 'Coxa e Sobrecoxa', tipo: 'aves', preco: 12.50, desc: 'Aves frescas e suculentas', img: 'https://fricassedefrango.com.br/wp-content/uploads/2025/07/como-fazer-coxa-e-sobrecoxa-de-frango-assada.jpg' },
-        { id: 8, nome: 'Peito de Frango', tipo: 'aves', preco: 16.80, desc: 'Peito desossado', img: 'https://espetinhodesucesso.com/wp-content/uploads/2022/12/como-assar-peito-de-frango.jpg' }
-      ];
+<!-- Carrinho fixo -->
+<div id="carrinho">
+  <h2>Carrinho</h2>
+  <div id="itens-carrinho"></div>
+  <div id="total">Total: R$ 0,00</div>
+  <button class="btn" onclick="abrirFinalizacao()">Finalizar Compra</button>
+</div>
 
-      // elementos
-      const grid = document.getElementById('productGrid');
-      const searchInput = document.getElementById('search');
-      const filter = document.getElementById('filter');
-      const sort = document.getElementById('sort');
+<script>
+// Dados dos produtos
+const produtos = [
+  {id:1,nome:'Picanha',preco:89.90,img:'https://i.pinimg.com/1200x/c7/51/2d/c7512d9a3d6ddb81289040069029f4c1.jpg',tipo:'bovinos'},
+  {id:2,nome:'Costela Bovina',preco:49.90,img:'https://i.pinimg.com/736x/7c/1b/3f/7c1b3f8c9471a2a6751ce06dc7aebc2a.jpg',tipo:'bovinos'},
+  {id:3,nome:'Alcatra',preco:59.90,img:'https://i.pinimg.com/1200x/c1/39/44/c139444bf874178c3dfee0eface7de4c.jpg',tipo:'bovinos'},
+  {id:4,nome:'Maminha',preco:54.90,img:'https://i.pinimg.com/736x/76/a5/f3/76a5f37c90b4a15712475da672a99778.jpg',tipo:'bovinos'},
+  {id:5,nome:'Fraldinha',preco:52.90,img:'https://i.pinimg.com/736x/6d/2b/e3/6d2be35cb3961fc7af8beb43bbe6ebe0.jpg',tipo:'bovinos'},
+  {id:6,nome:'Linguiça Toscana',preco:24.90,img:'https://i.pinimg.com/1200x/f8/43/84/f84384d90be0ad6165679de3cbee891f.jpg',tipo:'suinos'},
+  {id:7,nome:'Cupim',preco:44.90,img:'https://i.pinimg.com/1200x/a4/eb/48/a4eb48960f327ef554a9e6405df1262e.jpg',tipo:'bovinos'},
+  {id:8,nome:'Filé Mignon',preco:99.90,img:'https://i.pinimg.com/1200x/26/38/1c/26381c85aa4bca7f52636475495a80b2.jpg',tipo:'bovinos'},
+  {id:9,nome:'Contra Filé',preco:69.90,img:'https://i.pinimg.com/736x/b9/2a/46/b92a469de387eb81bc5b82a73a76d202.jpg',tipo:'bovinos'},
+  {id:10,nome:'Asinha de Frango',preco:18.90,img:'https://i.pinimg.com/1200x/36/00/bc/3600bcd1efa6b409f0207d656fb47d10.jpg',tipo:'aves'},
+  {id:11,nome:'Pernil',preco:32.90,img:'https://i.pinimg.com/1200x/4d/96/19/4d9619a51d14acc491482e394389226f.jpg',tipo:'suinos'},
+  {id:12,nome:'Panceta',preco:39.90,img:'https://i.pinimg.com/736x/75/4b/3d/754b3d28cafe462e9094ef94baf6a638.jpg',tipo:'suinos'}
+];
 
-      const cartPanel = document.getElementById('cartPanel');
-      const openCart = document.getElementById('openCart');
-      const closeCart = document.getElementById('closeCart');
-      const cartItemsEl = document.getElementById('cartItems');
-      const cartTotalEl = document.getElementById('cartTotal');
-      const clearCartBtn = document.getElementById('clearCart');
-      const checkoutBtn = document.getElementById('checkout');
-      const cartCount = document.getElementById('cartCount');
+let carrinho = [];
 
-      const navToggle = document.getElementById('navToggle');
-      const navMenu = document.getElementById('navMenu');
+// Montar produtos
+function montarProdutos(){
+  const area = document.getElementById('lista-produtos');
+  area.innerHTML = '';
+  produtos.forEach((p,idx)=>{
+    const card = document.createElement('div');
+    card.className = 'produto fade-in';
+    card.style.animationDelay = (idx*40)+'ms';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <p>R$ ${p.preco.toFixed(2)}</p>
+      <button onclick="adicionarCarrinho(${p.id})">Adicionar ao Carrinho</button>
+    `;
+    area.appendChild(card);
+  });
+}
 
-      // nav toggle
-      navToggle && navToggle.addEventListener('click', () => {
-        const open = navToggle.getAttribute('aria-expanded') === 'true';
-        navToggle.setAttribute('aria-expanded', String(!open));
-        if (navMenu) navMenu.style.display = open ? 'none' : 'flex';
-      });
+// Alternar abas
+function aba(id){
+  document.querySelectorAll('.aba').forEach(x=>x.classList.add('hidden'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.remove('hidden');
+  const carrinhoFix = document.getElementById('carrinho');
+  carrinhoFix.style.display = id === 'finalizacao' ? 'none' : 'block';
+}
 
-      // cart from localStorage
-      let cart = JSON.parse(localStorage.getItem('cart_Beeflogy') || '[]');
+// Categorias e cardápio
+function mostrarCategoria(tipo){
+  const area = document.getElementById('categorias-lista');
+  area.innerHTML = '';
+  produtos.filter(p=>p.tipo===tipo).forEach((p,idx)=>{
+    const card = document.createElement('div');
+    card.className = 'produto fade-in';
+    card.style.animationDelay = (idx*40)+'ms';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <p>R$ ${p.preco.toFixed(2)}</p>
+      <button onclick="adicionarCarrinho(${p.id})">Adicionar ao Carrinho</button>
+    `;
+    area.appendChild(card);
+  });
+}
+const cardapioProdutos = {
+  cortes: produtos.filter(p=>p.tipo==='bovinos'),
+  churrasco: produtos.filter(p=>p.tipo==='suinos'),
+  preparados: produtos.filter(p=>p.tipo==='aves')
+};
+function mostrarCardapio(tipo){
+  const area = document.getElementById('cardapio-lista');
+  area.innerHTML = '';
+  cardapioProdutos[tipo].forEach((p,idx)=>{
+    const card = document.createElement('div');
+    card.className = 'produto fade-in';
+    card.style.animationDelay = (idx*40)+'ms';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <p>R$ ${p.preco.toFixed(2)}</p>
+      <button onclick="adicionarCarrinho(${p.id})">Adicionar ao Carrinho</button>
+    `;
+    area.appendChild(card);
+  });
+}
 
-      const saveCart = () => localStorage.setItem('cart_Beeflogy', JSON.stringify(cart));
-      const formatMoney = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+// Tema
+const temaBtn = document.getElementById('temaBtn');
+let tema = localStorage.getItem('beeflogy_tema') === 'light';
+if(tema) document.body.classList.add('light');
+temaBtn.addEventListener('click', ()=>{
+  tema=!tema;
+  document.body.classList.toggle('light');
+  localStorage.setItem('beeflogy_tema',tema?'light':'dark');
+});
 
-      // render products
-      function renderProducts(list) {
-        grid.innerHTML = '';
-        if (!list.length) { grid.innerHTML = '<p style="color:var(--muted)">Nenhum produto encontrado.</p>'; return; }
-        list.forEach(p => {
-          const card = document.createElement('article');
-          card.className = 'card product-card';
-          card.dataset.id = p.id;
-          card.innerHTML = `
-        <div class="thumb"><img src="${p.img}" alt="${p.nome}" style="width:100%;height:120px;object-fit:cover;border-radius:8px"></div>
-        <h4>${p.nome}</h4>
-        <p>${p.desc}</p>
-        <div class="meta">
-          <div class="badge">${formatMoney(p.preco)}/kg</div>
-          <button class="small-btn add-btn" data-id="${p.id}">Adicionar</button>
-        </div>
-      `;
-          grid.appendChild(card);
-        });
-      }
+// Carrinho
+function adicionarCarrinho(id){
+  const produto = produtos.find(p=>p.id===id);
+  carrinho.push(produto);
+  atualizarCarrinho();
+}
+function atualizarCarrinho(){
+  const itensCarrinho = document.getElementById('itens-carrinho');
+  const totalCarrinho = document.getElementById('total');
+  itensCarrinho.innerHTML = '';
+  let total = 0;
+  carrinho.forEach(p=>{
+    itensCarrinho.innerHTML += `<div class="menu-item">${p.nome} - R$ ${p.preco.toFixed(2)}</div>`;
+    total += p.preco;
+  });
+  totalCarrinho.textContent = `Total: R$ ${total.toFixed(2)}`;
 
-      // filters
-      function applyFilters() {
-        const q = (searchInput.value || '').trim().toLowerCase();
-        const type = filter.value;
-        const order = sort.value;
-        let list = produtos.filter(p => {
-          const hit = p.nome.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
-          const typeOk = (type === 'all') || p.tipo === type;
-          return hit && typeOk;
-        });
-        if (order === 'price-asc') list.sort((a, b) => a.preco - b.preco);
-        if (order === 'price-desc') list.sort((a, b) => b.preco - a.preco);
-        if (order === 'name-asc') list.sort((a, b) => a.nome.localeCompare(b.nome));
-        if (order === 'featured') list.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0));
-        renderProducts(list); attachAddButtons();
-      }
-
-      // add buttons
-      function attachAddButtons() {
-        document.querySelectorAll('.add-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            addToCart(Number(btn.dataset.id));
-          });
-        });
-        // also support older .addCart
-        document.querySelectorAll('.addCart').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const card = e.target.closest('.product-card');
-            if (!card) return;
-            addToCart(Number(card.dataset.id));
-          });
-        });
-      }
-
-      // cart functions
-      function addToCart(id) {
-        const prod = produtos.find(p => p.id === id);
-        if (!prod) return;
-        const item = cart.find(i => i.id === id);
-        if (item) item.qty++;
-        else cart.push({ id: prod.id, nome: prod.nome, preco: prod.preco, img: prod.img, qty: 1 });
-        saveCart(); renderCart(); flashCartCount();
-      }
-
-      function updateQty(id, qty) {
-        const it = cart.find(i => i.id === id);
-        if (!it) return;
-        it.qty = qty;
-        if (it.qty <= 0) cart = cart.filter(i => i.id !== id);
-        saveCart(); renderCart(); flashCartCount();
-      }
-
-      function removeItem(id) {
-        cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); flashCartCount();
-      }
-
-      function clearCart() {
-        cart = []; saveCart(); renderCart(); flashCartCount();
-      }
-
-      function cartTotal() { return cart.reduce((s, i) => s + i.preco * i.qty, 0); }
-
-      // render cart
-      function renderCart() {
-        cartItemsEl.innerHTML = '';
-        if (cart.length === 0) {
-          cartItemsEl.innerHTML = '<p style="color:var(--muted)">Carrinho vazio. Adicione cortes!</p>';
-          cartTotalEl.textContent = formatMoney(0);
-          cartCount.textContent = '0';
-          return;
-        }
-        cart.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'cart-item';
-          row.innerHTML = `
-        <img src="${item.img}" class="cart-item-img" alt="${item.nome}">
-        <div style="flex:1">
-          <div class="title">${item.nome}</div>
-          <div style="color:var(--muted);font-size:13px">${formatMoney(item.preco)} / kg</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <div>
-            <button class="small-btn" data-action="dec" data-id="${item.id}">−</button>
-            <span style="padding:0 8px">${item.qty}</span>
-            <button class="small-btn" data-action="inc" data-id="${item.id}">+</button>
-          </div>
-          <div style="font-weight:700">${formatMoney(item.preco * item.qty)}</div>
-          <button class="small-btn" data-action="remove" data-id="${item.id}">Remover</button>
-        </div>
-      `;
-          cartItemsEl.appendChild(row);
-        });
-
-        cartItemsEl.querySelectorAll('[data-action]').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const id = Number(btn.dataset.id);
-            const act = btn.dataset.action;
-            if (act === 'inc') updateQty(id, cart.find(i => i.id === id).qty + 1);
-            if (act === 'dec') updateQty(id, cart.find(i => i.id === id).qty - 1);
-            if (act === 'remove') removeItem(id);
-          });
-        });
-
-        cartTotalEl.textContent = formatMoney(cartTotal());
-        cartCount.textContent = String(cart.reduce((s, i) => s + i.qty, 0));
-      }
-
-      function flashCartCount() {
-        try {
-          cartCount.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.2)' }, { transform: 'scale(1)' }], { duration: 300 });
-        } catch (e) { }
-      }
-
-      // open/close cart (keeps class open)
-      openCart && openCart.addEventListener('click', (e) => { e.preventDefault(); cartPanel.classList.add('open'); cartPanel.setAttribute('aria-hidden', 'false'); });
-      closeCart && closeCart.addEventListener('click', () => { cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true'); });
-
-      // clear/checkout
-      clearCartBtn && clearCartBtn.addEventListener('click', clearCart);
-      checkoutBtn && checkoutBtn.addEventListener('click', () => {
-        if (cart.length === 0) { alert('Seu carrinho está vazio.'); return; }
-        alert('Pedido realizado! Entraremos em contato.');
-        clearCart(); cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true');
-      });
-
-      // search/filter events
-      [searchInput, filter, sort].forEach(el => el && el.addEventListener('input', applyFilters));
-
-      // contact form
-      const contactForm = document.getElementById('contactForm');
-      contactForm && contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nome = (document.getElementById('nome').value || '').trim();
-        const msg = (document.getElementById('mensagem').value || '').trim();
-        if (!nome || !msg) { alert('Preencha nome e mensagem.'); return; }
-        alert('Mensagem enviada. Obrigado, ' + nome + '!');
-        contactForm.reset();
-      });
-
-      // escape to close
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') { cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true'); } });
-
-      // init
-      renderProducts(produtos);
-      attachAddButtons();
-      renderCart();
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-
+  const itensFinal = document.getElementById('itens-carrinho-final');
+  const totalFinal = document.getElementById('total-carrinho');
+  if(itensFinal && totalFinal){
+    itensFinal.innerHTML = '';
+    carrinho.forEach(p=>{
+      itensFinal.innerHTML += `<div class="menu-item">${p.nome} - R$ ${p.preco.toFixed(2)}</div>`;
     });
-  </script>
-</body>
+    totalFinal.textContent = `Total: R$ ${total.toFixed(2)}`;
+  }
+}
+function abrirFinalizacao(){
+  if(carrinho.length===0){alert("Seu carrinho está vazio!"); return;}
+  aba('finalizacao');
+  atualizarCarrinho();
+}
+function finalizarPedido(){
+  if(carrinho.length===0){alert("Seu carrinho está vazio!"); return;}
+  alert("Pedido finalizado com sucesso!");
+  carrinho=[];
+  atualizarCarrinho();
+  aba('produtos');
+}
 
-</html>
+// Inicialização
+montarProdutos();
+aba('produtos');
+</script>
+
+<footer>
+  <div class="social-footer">
+    <a href="https://www.instagram.com/beef.logy/" target="_blank" class="social-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"  style="width: 30px;">
+    </a>
+
+    <a href="https://x.com/beeflogy67008" target="_blank" class="social-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" style="width: 30px;">
+    </a>
+  </div>
+
+  <p>© 2025 Beeflogy — São Paulo - SP</p>
+</footer>
+
+
+</body>
+</html
